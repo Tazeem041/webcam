@@ -48,3 +48,8 @@ video, img {
   margin: 10px;
 }
 
+.captured-image {
+  display: block;
+  margin-left: 70px;
+  margin-right: auto;
+}
