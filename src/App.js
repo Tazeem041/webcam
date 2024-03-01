@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [capturedImage, setCapturedImage] = useState(null);
+
+  const startWebcam = () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        document.getElementById('video').srcObject = stream;
+      })
+      .catch((error) => {
+        console.log("Error accessing webcam:", error);
+      });
+  }
+
+  const capturePhoto = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 640;
+    canvas.height = 480;
+    const context = canvas.getContext('2d');
+    context.drawImage(document.getElementById('video'), 0, 0, 640, 480);
+
+    setCapturedImage(canvas.toDataURL('image/png'))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Webcam Capture</h1>
+      <div className="container">
+        <video id="video" autoPlay />
+        {capturedImage && <img src={capturedImage} alt="Captured" />}
+      </div>
+      <div>
+        <button onClick={startWebcam}>Start Camera</button>
+        <button onClick={capturePhoto}>Capture Photo</button>
+      </div>
     </div>
   );
 }
