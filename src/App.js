@@ -20,6 +20,9 @@ function App() {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
       setCropClicked(true);
+     
+      
+      
     }
   };
 
@@ -30,6 +33,7 @@ function App() {
         setMediaStream(stream);
         setCapturedImage(null);
         setCropData(null);
+        setCropClicked(false);
       })
       .catch((error) => {
         alert("Error accessing webcam:", error);
@@ -54,7 +58,7 @@ function App() {
         <video id="video" autoPlay />
         { capturedImage && !cropData && <Cropper
           ref={cropperRef}
-          style={{ height: 400, width: "100%" }}
+          style={{ height: 400, width: "100%",marginLeft: -300}}
           zoomTo={0.5}
           initialAspectRatio={1}
           preview=".img-preview"
@@ -76,7 +80,7 @@ function App() {
       <div className="save">
         {/* {cropData && <img src={cropData} alt="cropped image" />} */}
 
-        {mediaStream ? <button onClick={capturePhoto} >Capture Photo</button> : <button onClick={startWebcam}>{capturedImage ? 'Recapture' : 'Start camera'}</button>} 
+        {mediaStream ? <button onClick={capturePhoto} >Capture Photo</button> : <button onClick={startWebcam}>{capturedImage  ? 'Recapture' : 'Start camera'}</button>} 
 
         {/* {capturedImage ? <button id="save"><a href={capturedImage} download='Web-cam-image.png'> Save </a> </button> : ''} */}
 
@@ -87,16 +91,16 @@ function App() {
       <a href={capturedImage} download='webcam-image.png' > Save </a>
     </button>}
     {cropData &&(
-    <button id="color">
+    <button >
       <a href={cropData}  download='Cropped-image.png'> save cropped image </a>
-    </button>)}
+    </button>) }
     </div>
   </div>
 )}
         
         {/* { capturedImage  ? <button onClick={getCropData} >Crop Image</button> : ""} */}
        
-        {capturedImage && !cropData && !isCropClicked && (
+        {capturedImage && !cropData && !isCropClicked &&  (
           <button onClick={getCropData}>Crop Image</button>
         )}
       </div>
