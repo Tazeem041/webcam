@@ -83,9 +83,9 @@ function App() {
         {capturedImage && (
   <div>
   <div className="croppedbtn">
-    <button className="save">
+    {!cropData &&<button className="save">
       <a href={capturedImage} download='webcam-image.png' > Save </a>
-    </button>
+    </button>}
     {cropData &&(
     <button >
       <a href={cropData}  download='Cropped-image.png'> save cropped image </a>
